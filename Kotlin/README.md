@@ -1,2 +1,2 @@
-# QNA
-Question aNswer Android
+# 💬 Kotlin
+>코틀린에 관한 질문&지식 공유 공간
