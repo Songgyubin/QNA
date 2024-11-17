@@ -1,0 +1,38 @@
+name: Auto Reviewers and Assignee
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  assign-reviewers:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set PR Assignee and Reviewers
+        env:
+          REVIEWERS: Songgyubin,junggyungjin,Choiyounho,JGeun
+        run: |
+          # Extract the PR author (Assignee)
+          PR_AUTHOR=$(jq -r '.pull_request.user.login' $GITHUB_EVENT_PATH)
+
+          # Convert reviewers list to an array
+          IFS=',' read -r -a REVIEWERS_ARRAY <<< "$REVIEWERS"
+
+          # Filter out the PR author from reviewers
+          FILTERED_REVIEWERS=()
+          for reviewer in "${REVIEWERS_ARRAY[@]}"; do
+            if [[ "$reviewer" != "$PR_AUTHOR" ]]; then
+              FILTERED_REVIEWERS+=("$reviewer")
+            fi
+          done
+
+          # Convert filtered reviewers array back to comma-separated string
+          REVIEWERS_STRING=$(IFS=,; echo "${FILTERED_REVIEWERS[*]}")
+
+          # Assign the PR author as the Assignee
+          gh pr edit ${{ github.event.pull_request.number }} --add-assignee "$PR_AUTHOR"
+
+          # Assign filtered reviewers
+          if [[ -n "$REVIEWERS_STRING" ]]; then
+            gh pr edit ${{ github.event.pull_request.number }} --add-reviewer "$REVIEWERS_STRING"
+          fi
