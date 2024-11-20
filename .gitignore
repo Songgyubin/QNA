@@ -1,3 +1,46 @@
+# 빌드 디렉토리
+/build
+
+# Android Studio 프로젝트 파일
+/app.iml
+
+# Gradle wrapper
+/gradlew
+
+# 바이너리 파일 (의미 있음)
+*.bin
+
+# 락 파일
+*.lock
+
+# properties 설정 파일
+*.properties
+
+# Sentry Config File
+sentry.properties
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Gradle files
+.gradle/
+build/
+
+# generated .kotlin
+.kotlin/
+
+# Log/OS Files
+*.log
+
+# Android Studio genera
+
+# IntelliJ
+*.iml
+.idea/
+misc.xml
+deploymentTargetDropDown.xml
+render.experimental.xml
+
 # OS-specific files
 .DS_Store
 .DS_Store?
